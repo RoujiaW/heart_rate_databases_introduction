@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from pymodm import connect
 import models
 import datetime
-import m1
+from m1 import create_user, add_heart_rate
 app = Flask(__name__)
 connect("mongodb://vcm-3551.vm.duke.edu:27017/heart_rate_app")
 @app.route("/api/heart_rate", methods=["POST"])
