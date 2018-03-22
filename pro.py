@@ -65,7 +65,8 @@ def average_now():
 	sum_interval = 0
 	if time_begin not in user.heart_rate_times:
 		case = {"error": "This time does not exist before",
-		"all heart)rate": user.heart_rate
+		"all heart_rate": user.heart_rate,
+		"heart_rate_times": user.heart_rate_times
 		}
 	else:
 		begin_location = user.heart_rate_times.index(time_begin)
