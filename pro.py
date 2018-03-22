@@ -12,7 +12,7 @@ def alldata(user_email):
 	"""
 	return all heart rate measurements for that user
 	"""
-	user = models.User.objects.raw({"_id": email}).first()
+	user = models.User.objects.raw({"_id": user_email}).first()
 	measurements = {
 		"measurements": user.heart_rate
 	}
@@ -24,7 +24,7 @@ def average_all(user_email):
 	"""
 	return average for all measurements
 	"""
-	user = models.User.objects.raw({"_id": email}).first()
+	user = models.User.objects.raw({"_id": user_email}).first()
 	aver = np.sum(user.heart)/len(uesr.heart)
 	average = {
 		"average": aver
