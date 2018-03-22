@@ -25,7 +25,7 @@ def average_all(user_email):
 	return average for all measurements
 	"""
 	user = models.User.objects.raw({"_id": email}).first()
-	aver = np.sum(user.heart)
+	aver = np.sum(user.heart)/len(uesr.heart)
 	average = {
 		"average": aver
 	}
@@ -46,7 +46,7 @@ def store_user():
 
 
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
-def aerage_now():
+def average_now():
 	"""
 	return return the average heart rate for the user since the time specified
 	"""
@@ -56,4 +56,5 @@ def aerage_now():
 	except NameError:
 		print("This user doesn't exist")
 	time_begin = r["heart_rate_average_since"]
+	begin_location = heart_rate_times_list.index(time_begin)
 		
