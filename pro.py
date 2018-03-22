@@ -25,7 +25,7 @@ def average_all(user_email):
 	return average for all measurements
 	"""
 	user = models.User.objects.raw({"_id": user_email}).first()
-	aver = sum(user.heart_rate)/len(uesr.heart_rate)
+	aver = sum(user.heart_rate)/len(user.heart_rate)
 	average = {
 		"average": aver
 	}
