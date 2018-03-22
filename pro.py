@@ -69,7 +69,7 @@ def average_now():
 		}
 	else:
 		begin_location = user.heart_rate_times.index(time_begin)
-		for i in range(begin_location-1, len(user.heart_rate_times),1):
+		for i in range(begin_location, len(user.heart_rate_times),1):
 			sum_interval = user.heart_rate[i] + sum_interval
 	average_interval = sum_interval/(len(user.heart_rate_times)-begin_location+1)
 	case = {"average_interval": average_interval} 
