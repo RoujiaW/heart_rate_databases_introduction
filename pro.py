@@ -3,7 +3,7 @@ from pymodm import connect
 import models
 import datetime
 from m1 import create_user, add_heart_rate
-
+import ta
 app = Flask(__name__)
 connect("mongodb://vcm-3551.vm.duke.edu:27017/heart_rate_app")
 
@@ -26,8 +26,14 @@ def average_all(user_email):
 	"""
 	user = models.User.objects.raw({"_id": user_email}).first()
 	aver = sum(user.heart_rate)/len(user.heart_rate)
+	tah = ta(user.age, aver)
+	if tah > 1:
+		stm = "this person may have Tachycardia"
+	else:
+		stm = "this person's heart rate is normal"
 	average = {
-		"average": aver
+		"average": aver,
+		"health condition": stm
 	}
 	return jsonify(average)
 
@@ -47,7 +53,7 @@ def store_user():
 	"heart_rate": user.heart_rate,
 	"heart_rate_times": user.heart_rate_times,
 	}		
-	return jsonify(message)
+	return jsonify(message), 200
 
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
 def average_now():
@@ -73,5 +79,12 @@ def average_now():
 		for i in range(begin_location, len(user.heart_rate_times),1):
 			sum_interval = user.heart_rate[i] + sum_interval
 		average_interval = sum_interval/(len(user.heart_rate_times)-begin_location+1)
-		case = {"average_interval": average_interval} 
-	return jsonify(case)
+		tah1 = ta(user.age, average_interval)
+		if tah1 > 1:
+                	stm = "this person may have Tachycardia"
+        	else:
+                	stm = "this person's heart rate is normal"
+		case = {"average_interval": average_interval,
+		"health condition": stm
+		} 
+	return jsonify(case), 200
