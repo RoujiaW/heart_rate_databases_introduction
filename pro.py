@@ -25,7 +25,7 @@ def average_all(user_email):
 	return average for all measurements
 	"""
 	user = models.User.objects.raw({"_id": user_email}).first()
-	aver = np.sum(user.heart)/len(uesr.heart)
+	aver = sum(user.heart_rate)/len(uesr.heart_rate)
 	average = {
 		"average": aver
 	}
@@ -64,7 +64,7 @@ def average_now():
 	else:
 		begin_location = heart_rate_times_list.index(time_begin)
 		for i in range(begin_location-1, len(heart_rate_times),1):
-			sum_interval += heart_rate_times[i]
+			sum_interval += heart_rate[i]
 			average = sum_interval/(len(heart_rate_times)-begin_location+1)
 	case = {"average_interval": average} 
 	return jsonify(case)
