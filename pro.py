@@ -3,7 +3,7 @@ from pymodm import connect
 import models
 import datetime
 from m1 import create_user, add_heart_rate
-import numpy as np
+
 app = Flask(__name__)
 connect("mongodb://vcm-3551.vm.duke.edu:27017/heart_rate_app")
 
@@ -64,7 +64,7 @@ def average_now():
 	time_begin = r["heart_rate_average_since"]
 	if time_begin not in user.heart_rate_times:
 		case = {"error": "This time does not exist before",
-		"average_interval": r["heart_rate"]
+		"all heart)rate": user.heart_rate
 		}
 	else:
 		begin_location = user.heart_rate_times_list.index(time_begin)
