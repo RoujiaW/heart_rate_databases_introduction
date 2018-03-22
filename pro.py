@@ -42,7 +42,10 @@ def store_user():
 		add_heart_rate(r["user_email"], r["heart_rate"],datetime.datetime.now())
 	except NameError:
 		create(email= r["user_email"], age= r["user_age"], heart_rate=r["heart_rate"])
-	message = {"information": "new information has been added"}
+	message = {"information": "new information has been added",
+	"heart_rate": user.heart_rate,
+	"heart_rate": user.heart_rate_times,
+	}		
 	return jsonify(message)
 
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
@@ -63,9 +66,9 @@ def average_now():
 		"average_interval": r["heart_rate"]
 		}
 	else:
-		begin_location = heart_rate_times_list.index(time_begin)
-		for i in range(begin_location-1, len(heart_rate_times),1):
+		begin_location = user.heart_rate_times_list.index(time_begin)
+		for i in range(begin_location-1, len(user.heart_rate_times),1):
 			sum_interval += heart_rate[i]
-			average = sum_interval/(len(heart_rate_times)-begin_location+1)
+			average = sum_interval/(len(user.heart_rate_times)-begin_location+1)
 	case = {"average_interval": average} 
 	return jsonify(case)
