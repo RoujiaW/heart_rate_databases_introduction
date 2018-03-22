@@ -57,7 +57,7 @@ def average_now():
 		return jsonify(error1)
 		
 	time_begin = r["heart_rate_average_since"]
-	if time_begin is not in user.heart_rate_times:
+	if time_begin not in user.heart_rate_times:
 		case = {"error": "This time does not exist before",
 		"average_interval": r["heart_rate"]
 		}
