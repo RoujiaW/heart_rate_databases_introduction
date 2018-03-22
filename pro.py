@@ -56,5 +56,9 @@ def average_now():
 	except NameError:
 		print("This user doesn't exist")
 	time_begin = r["heart_rate_average_since"]
-	begin_location = heart_rate_times_list.index(time_begin)
+	if time_begin is not in user.heart_rate_times:
+		print("This time does not exist")
+		return
+	else:
+		begin_location = heart_rate_times_list.index(time_begin)
 		
