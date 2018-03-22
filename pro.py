@@ -45,7 +45,7 @@ def store_user():
 	user = models.User.objects.raw({"_id": r["user_email"]}).first()
 	message = {"information": "new information has been added",
 	"heart_rate": user.heart_rate,
-	"heart_rate": user.heart_rate_times,
+	"heart_rate_times": user.heart_rate_times,
 	}		
 	return jsonify(message)
 
