@@ -42,7 +42,8 @@ def store_user():
 		add_heart_rate(r["user_email"], r["heart_rate"],datetime.datetime.now())
 	except NameError:
 		create(email= r["user_email"], age= r["user_age"], heart_rate=r["heart_rate"])
-
+	message = {"information": "new information has been added"}
+	return jsonify(message)
 
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
 def average_now():
