@@ -62,6 +62,7 @@ def average_now():
 		return jsonify(error1)
 		
 	time_begin = r["heart_rate_average_since"]
+	sum_interval = 0
 	if time_begin not in user.heart_rate_times:
 		case = {"error": "This time does not exist before",
 		"all heart)rate": user.heart_rate
@@ -69,7 +70,7 @@ def average_now():
 	else:
 		begin_location = user.heart_rate_times_list.index(time_begin)
 		for i in range(begin_location-1, len(user.heart_rate_times),1):
-			sum_interval += heart_rate[i]
+			sum_interval = user.heart_rate[i] + sum_interval
 	average_interval = sum_interval/(len(user.heart_rate_times)-begin_location+1)
 	case = {"average_interval": average_interval} 
 	return jsonify(case)
