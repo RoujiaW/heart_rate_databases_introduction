@@ -41,7 +41,6 @@ def store_user():
 	try:
 		add_heart_rate(r["user_email"], r["heart_rate"],datetime.datetime.now())
 	except NameError:
-		print("This user doesn't exist. Please create first")
 		create(email= r["user_email"], age= r["user_age"], heart_rate=r["heart_rate"])
 
 
@@ -54,11 +53,18 @@ def average_now():
 	try:
 		user = models.User.objects.raw({"_id": r["user_email"]}).first()
 	except NameError:
-		print("This user doesn't exist")
+		error1 = {"error": "This user does not exist"}
+		return jsonify(error1)
+		
 	time_begin = r["heart_rate_average_since"]
 	if time_begin is not in user.heart_rate_times:
-		print("This time does not exist")
-		return
+		case = {"error": "This time does not exist before",
+		"average_interval": r["heart_rate"]
+		}
 	else:
 		begin_location = heart_rate_times_list.index(time_begin)
-		
+		for i in range(begin_location-1, len(heart_rate_times),1):
+			sum_interval += heart_rate_times[i]
+			average = sum_interval/(len(heart_rate_times)-begin_location+1)
+	case = {"average_interval": average} 
+	return jsonify(case)
