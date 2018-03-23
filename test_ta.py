@@ -4,7 +4,7 @@ def test_ta():
 	"""	
 	try:
 		import pytest
-		import ta
+		from ta import ta
 	except ImportError:
 		print("Necessary imports for this test function failed")
 		return
