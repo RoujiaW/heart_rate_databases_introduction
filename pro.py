@@ -53,11 +53,11 @@ def store_user():
 			add_heart_rate(r["user_email"], r["heart_rate"],datetime.datetime.now())
 		except NameError:
 			create(email= r["user_email"], age= r["user_age"], heart_rate=r["heart_rate"])
-			user = models.User.objects.raw({"_id": r["user_email"]}).first()
-			message = {"information": "new information has been added",
-			"heart_rate": user.heart_rate,
-			"heart_rate_times": user.heart_rate_times,
-			}		
+		user = models.User.objects.raw({"_id": r["user_email"]}).first()
+		message = {"information": "new information has been added",
+		"heart_rate": user.heart_rate,
+		"heart_rate_times": user.heart_rate_times,
+		}		
 		return jsonify(message), 200
 
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
