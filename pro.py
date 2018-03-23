@@ -66,7 +66,7 @@ def average_now():
 	return return the average heart rate for the user since the time specified
 	"""
 	r = request.get_json()
-	if r["user_email"] is not str or r["user_age"] is not int or r["heart_rate"] is not int:
+	if r["user_email"] is not str or r["heart_rate_average_since"] is not str:
                 message = {"information": "something wrong with the input"}
                 return jsonify(message),400
 	else:
