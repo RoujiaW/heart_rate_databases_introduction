@@ -87,7 +87,8 @@ def average_now():
 					sum_interval = user.heart_rate[n] + sum_interval
 				average_interval = sum_interval/(len(user.heart_rate_times)-i+1)	
 			else first_time == user_time[len(user.heart_rate)-1]:
-				average_interval = user.heart_rate[len(user.heart_rate)-1]						tah1 = ta(user.age, average_interval)
+				average_interval = user.heart_rate[len(user.heart_rate)-1]
+		tah1 = ta(user.age, average_interval)
 		if tah1 > 1:
 			stm = "this person may have Tachycardia"
 		else:
