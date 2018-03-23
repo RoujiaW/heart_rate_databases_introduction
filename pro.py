@@ -45,10 +45,7 @@ def store_user():
 	and time
 	"""
 	r = request.get_json()
-	if r["user_age"] is not int and r["heart_rate"] is not int:
-		message = {"information": "something wrong with the input"}
-		return jsonify(message),400
-	else:
+	if isinstance(r["user_email"],str) and isinstance(r["user_age"],int) and isinstance(r["heart_rate"],int):
 		try:
 			add_heart_rate(r["user_email"], r["heart_rate"],datetime.datetime.now())
 		except NameError:
@@ -59,17 +56,16 @@ def store_user():
 		"heart_rate_times": user.heart_rate_times,
 		}		
 		return jsonify(message), 200
-
+	else:
+		message = {"information": "something wrong with the input"}
+		return jsonify(message),400
 @app.route("/api/heart_rate/interval_average",methods=["POST"])
 def average_now():
 	"""
 	return return the average heart rate for the user since the time specified
 	"""
 	r = request.get_json()
-	if r["user_email"] is not str or r["heart_rate_average_since"] is not str:
-                message = {"information": "something wrong with the input"}
-                return jsonify(message),400
-	else:
+	if isinstance(r["user_email"],str) and isinstance(r["heart_rate_average_since"],str):
 		try:
 			user = models.User.objects.raw({"_id": r["user_email"]}).first()
 		except NameError:
@@ -107,3 +103,6 @@ def average_now():
 			"health condition": stm
 			} 
 		return jsonify(case), 200
+	else:
+		message = {"information": "something wrong with the input"}
+		return jsonify(message),400
