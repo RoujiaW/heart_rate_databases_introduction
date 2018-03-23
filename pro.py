@@ -70,8 +70,9 @@ def average_now():
 		
 	time_begin = r["heart_rate_average_since"]
 	first_time = time_begin
+	user_time = []
 	for i in range(len(user.heart_rate_times)):
-		user_time[i] = user.heart_rate_times[i].strftime("%Y-%m-%d %H:%M:%S.%f")
+		user_time.append(user.heart_rate_times[i].strftime("%Y-%m-%d %H:%M:%S.%f"))
 	sum_interval = 0
 	if first_time > user_time[len(user.heart_rate_times)-1]:
 		case = {"error": "There is no time after this",
