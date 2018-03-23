@@ -69,7 +69,7 @@ def average_now():
 		return jsonify(error1)
 		
 	time_begin = r["heart_rate_average_since"]
-	first_time = time.strptime(time_begin,'%Y-%m-%d %H:%M:%S')
+	first_time = time.strptime(time_begin,'%Y-%m-%d %H:%M:%S.%f')
 	for i in range(len(user.heart_rate_times)):
 		user_time[i] = time.strptime(user.heart_rate_times)
 	sum_interval = 0
