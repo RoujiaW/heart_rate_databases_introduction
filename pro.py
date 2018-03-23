@@ -45,7 +45,7 @@ def store_user():
 	and time
 	"""
 	r = request.get_json()
-	if r["user_email"] is not str or r["user_age"] is not int or r["heart_rate"] is not int:
+	if r["user_age"] is not int and r["heart_rate"] is not int:
 		message = {"information": "something wrong with the input"}
 		return jsonify(message),400
 	else:
