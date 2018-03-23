@@ -3,7 +3,7 @@ from pymodm import connect
 import models
 import datetime
 from m1 import create_user, add_heart_rate
-import ta
+from ta import ta
 app = Flask(__name__)
 connect("mongodb://vcm-3551.vm.duke.edu:27017/heart_rate_app")
 
@@ -68,22 +68,30 @@ def average_now():
 		return jsonify(error1)
 		
 	time_begin = r["heart_rate_average_since"]
+	first_time = time.strptime(time_begin,'%Y-%m-%d %H:%M:%s')
+	for i in range(len(user.heart_rate_times)):
+		user_time[i] = time.strptime(user.heart_rate_times)
 	sum_interval = 0
-	if time_begin not in user.heart_rate_times:
-		case = {"error": "This time does not exist before",
+	if first_time > user_time[len(user.heart_rate_times)-1]:
+		case = {"error": "There is no time after this",
 		"all heart_rate": user.heart_rate,
 		"heart_rate_times": user.heart_rate_times
 		}
 	else:
-		begin_location = user.heart_rate_times.index(time_begin)
-		for i in range(begin_location, len(user.heart_rate_times),1):
-			sum_interval = user.heart_rate[i] + sum_interval
-		average_interval = sum_interval/(len(user.heart_rate_times)-begin_location+1)
-		tah1 = ta(user.age, average_interval)
+		for i in range(len(user.heart_rate_times)-1):
+			if first_time < user_time[0]:
+				sum_interval = sum(user.heart_rate)
+				average_interval = sum_interval/len(user.heart_rate)
+			elif first_time >= user_time[i] and first_time < user_time[i+1]:
+				for n in range(i, len(user.heart_rate_times),1):
+					sum_interval = user.heart_rate[n] + sum_interval
+				average_interval = sum_interval/(len(user.heart_rate_times)-i+1)	
+			else first_time == user_time[len(user.heart_rate)-1]:
+				average_interval = user.heart_rate[len(user.heart_rate)-1]						tah1 = ta(user.age, average_interval)
 		if tah1 > 1:
-                	stm = "this person may have Tachycardia"
-        	else:
-                	stm = "this person's heart rate is normal"
+			stm = "this person may have Tachycardia"
+		else:
+			stm = "this person's heart rate is normal"
 		case = {"average_interval": average_interval,
 		"health condition": stm
 		} 
