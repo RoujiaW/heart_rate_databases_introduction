@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from pymodm import connect
 import models
 import datetime
+import time
 from m1 import create_user, add_heart_rate
 from ta import ta
 app = Flask(__name__)
